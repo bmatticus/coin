@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "6a150260-3664-4967-bbf4-ced8fcab2153",
+		"name": "stream",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Kafka Supervisor Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": \"kafka\",\r\n  \"dataSchema\": {\r\n    \"dataSource\": \"coin\",\r\n    \"parser\": {\r\n      \"type\": \"string\",\r\n      \"parseSpec\": {\r\n        \"format\": \"json\",\r\n        \"timestampSpec\": {\r\n          \"column\": \"timestamp\",\r\n          \"format\": \"auto\"\r\n        },\r\n        \"dimensionsSpec\": {\r\n          \"dimensions\": [\r\n            \"circulating_supply\",\r\n            \"name\",\r\n            {\"name\": \"quote:USD:price\", \"type\": \"double\"},\r\n            \"symbol\",\r\n            \"total_supply\"\r\n          ]\r\n        }\r\n      }\r\n    },\r\n    \"metricsSpec\" : [{\r\n    \t\"type\": \"doubleLast\",\r\n    \t\"name\": \"lastPrice\",\r\n    \t\"fieldName\": \"quote:USD:price\"\r\n    }],\r\n    \"granularitySpec\": {\r\n      \"type\": \"uniform\",\r\n      \"segmentGranularity\": \"MINUTE\",\r\n      \"queryGranularity\": \"NONE\",\r\n      \"rollup\": false\r\n    }\r\n  },\r\n  \"tuningConfig\": {\r\n    \"type\": \"kafka\",\r\n    \"reportParseExceptions\": false\r\n  },\r\n  \"ioConfig\": {\r\n    \"topic\": \"coin\",\r\n    \"replicas\": 2,\r\n    \"taskDuration\": \"PT10M\",\r\n    \"completionTimeout\": \"PT20M\",\r\n    \"consumerProperties\": {\r\n      \"bootstrap.servers\": \"192.168.35.10:9092\"\r\n    }\r\n  }\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://192.168.35.10:8090/druid/indexer/v1/supervisor",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"35",
+						"10"
+					],
+					"port": "8090",
+					"path": [
+						"druid",
+						"indexer",
+						"v1",
+						"supervisor"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

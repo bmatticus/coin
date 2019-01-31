@@ -4,6 +4,7 @@
 
 import requests
 import json
+import datetime
 
 class CoinMarket(object):
     """
@@ -60,6 +61,7 @@ class CoinMarket(object):
 
         response = requests.get(self._get_api_path(path="listings/latest"), headers=self._headers())
 
+        items = []
         if response is not None and "data" in response.json():
             for item in response.json()["data"]:
                 flat_item = {}
@@ -75,4 +77,8 @@ class CoinMarket(object):
 
                     flat_item[field] = value
 
-                print flat_item
+
+                flat_item['timestamp'] = datetime.datetime.now().isoformat()
+                items.append(flat_item)
+
+        return items
