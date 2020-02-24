@@ -26,7 +26,7 @@ instance and your API key.
 
 You can use a -v to pass in an api_key after building if you need.
 
-```docker run -v <path_to_api_key>:/opt/ocoin/api_key -d coin```
+```docker run -v <path_to_api_key>:/opt/coin/api_key -d coin```
 
 ### Kafka docker
 
