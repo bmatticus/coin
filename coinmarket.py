@@ -1,9 +1,8 @@
 """
-
+Coin Market Interation Class
 """
 
 import requests
-import json
 import datetime
 
 class CoinMarket(object):
@@ -13,7 +12,7 @@ class CoinMarket(object):
 
     def __init__(self):
         """
-
+        Initialize instance of CoinMarket class. Set API host/ETC
         """
 
         self.api_host = "pro-api.coinmarketcap.com"
@@ -29,9 +28,10 @@ class CoinMarket(object):
 
     def _headers(self):
         """
+        Private method, _ prefix, to define the headers for requests to CoinMarket
 
 
-        :return:
+        :return: Header dictionary
         """
 
         with open(self.api_key_file, "r") as api_key_file:
@@ -44,9 +44,10 @@ class CoinMarket(object):
 
     def _get_api_path(self, path):
         """
+        Private mathod to generate API path for CoinMarket based on target endpoint.
 
-        :param path:
-        :return:
+        :param path: Target endpoint path
+        :return: Full API path
         """
 
         return "https://{host}/{base}/{path}".format(host=self.api_host, base=self.api_base_path, path=path)
@@ -54,9 +55,9 @@ class CoinMarket(object):
 
     def get_latest_listing(self):
         """
+        Retrieves latest listings for coins
 
-
-        :return:
+        :return: List of dictionary objects containin coin data
         """
 
         response = requests.get(self._get_api_path(path="listings/latest"), headers=self._headers())
